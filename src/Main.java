@@ -1,5 +1,12 @@
 import java.util.Scanner;
 
+class Engine {
+    private String serialNumperEngine;
+    private int powerEngine;
+    private int volumeEngine;
+    private String type_of_fuel;
+    private int cntCilinders;
+}
 
 class Car {
     public enum TypesAuto{LightAuto, Abobus, Gruzovik, Airplane}
@@ -8,28 +15,30 @@ class Car {
     private String Marka;
     private TypesAuto TypeAuto;
     private String ColorAuto;
-    private Integer PowerEngine;
+    private class Engine;
     private Integer CntWheels;
 
-    public Car(String Marka, TypesAuto typeAuto, String ColorAuto, Integer PowerEngine, Integer CntWheels){
+    public Car(String Marka, TypesAuto typeAuto, String ColorAuto, class Engine, Integer CntWheels){
         this.regZnak = "Undefined";
         this.Marka = Marka;
-        this.TypeAuto = TypeAuto;
+        this.TypeAuto = typeAuto;
         this.ColorAuto = ColorAuto;
-        this.PowerEngine = PowerEngine;
+        this.Engine = Engine;
         this.CntWheels = CntWheels;
     }
-    public Car(String RegZnak, String Marka, TypesAuto typeAuto, String ColorAuto, Integer PowerEngine, Integer CntWheels){
+    public Car(String RegZnak, String Marka, TypesAuto typeAuto, String ColorAuto, class Engine, Integer CntWheels){
         this.regZnak = RegZnak;
         this.Marka = Marka;
-        this.TypeAuto = TypeAuto;
+        this.TypeAuto = typeAuto;
         this.ColorAuto = ColorAuto;
-        this.PowerEngine = PowerEngine;
+        this.Engine = Engine;
         this.CntWheels = CntWheels;
     }
 
     public void setRegZnak(String regZnak){
+        System.out.println("вызов сеттера 2");
         this.regZnak = regZnak;
+        System.out.println("вызов сеттера 1");
     }
     public void setColorAuto(String ColorAuto){
         this.ColorAuto = ColorAuto;
@@ -46,6 +55,11 @@ class Car {
         System.out.println("мощность - "+this.PowerEngine);
         System.out.println("количество колёс - "+this.CntWheels);
     }
+
+}
+
+
+class Complex {
 
 }
 
@@ -89,7 +103,7 @@ public class Main {
 
 
 
-        Car auto1 = new Car("KaMaZ", Car.TypesAuto.Airplane, "Yellow", 340, 6);
+        Car auto1 = new Car("А 141 ВЕ 61 RUS", "KaMaZ", Car.TypesAuto.Airplane, "Yellow", 340, 6);
         System.out.print("\nСоздано авто!\n");
 
 
@@ -113,10 +127,15 @@ public class Main {
                     break;
                 }
                 case 1: {
+                    Scanner input = new Scanner(System.in);
+
                     System.out.println("\nВведите регистрационный номер авто формата \"X 000 XX 00 RUS или X 000 XX 000 RUS\"\n");
-                    String regZn = in.next();
-                    if (regZn.matches(regex)){
-                        auto1.setRegZnak(regZn);
+
+
+                    String newRegZn = input.nextLine();
+                    if (newRegZn.matches(regex)){
+                        System.out.println("Ввод правильный");
+                        auto1.setRegZnak(newRegZn);
                     }
                     else{
                         System.out.println("Вы ввели неверный Знак!");
