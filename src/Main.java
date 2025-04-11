@@ -1,44 +1,87 @@
 import java.util.Scanner;
 
-class Engine {
-    private String serialNumperEngine;
-    private int powerEngine;
-    private int volumeEngine;
-    private String type_of_fuel;
-    private int cntCilinders;
-}
 
 class Car {
     public enum TypesAuto{LightAuto, Abobus, Gruzovik, Airplane}
+
 
     private String regZnak;
     private String Marka;
     private TypesAuto TypeAuto;
     private String ColorAuto;
-    private class Engine;
+    private Integer PowerEngine;
     private Integer CntWheels;
 
-    public Car(String Marka, TypesAuto typeAuto, String ColorAuto, class Engine, Integer CntWheels){
+    private TypesAuto typeAuto;
+    private Engine engine;
+
+    class Engine {
+        private int PwrEngine;
+        private String serialNumber;
+        private int valueEngine;
+        private int eatingFuel;
+        private String typeOfFuel;
+        private int cntCilinders;
+
+        private Engine (int pwrEngine, String serialNumber, int valueEngine, int eatingFuel, String typeOfFuel, int cntCilinders){
+            this.PwrEngine = PwrEngine;
+            this.serialNumber = serialNumber;
+            this.valueEngine = valueEngine;
+            this.eatingFuel = eatingFuel;
+            this.typeOfFuel = typeOfFuel;
+            this.cntCilinders = cntCilinders;
+        }
+        public void getEngineInfo(){
+            System.out.println("\n" +
+                    "\nPwrEngine - " + PwrEngine +
+                    "\nserialNumber - " + serialNumber +
+                    "\nvalueEngine - " + valueEngine +
+                    "\neatingFuel - " + eatingFuel +
+                    "\ntypeOfFuel - " + typeOfFuel +
+                    "\ncntCilinders - " + cntCilinders +
+                    "\n");
+        }
+    }
+
+
+
+    public Car(String Marka, TypesAuto typeAuto, String ColorAuto, Integer PowerEngine, Integer CntWheels){
+        this.regZnak = "Undefined";
+        this.Marka = Marka;
+        this.typeAuto = typeAuto;
+        this.ColorAuto = ColorAuto;
+        this.PowerEngine = PowerEngine;
+        this.CntWheels = CntWheels;
+    }
+    public Car(String RegZnak, String Marka, TypesAuto typeAuto, String ColorAuto, Integer PowerEngine, Integer CntWheels){
+        this.regZnak = RegZnak;
+        this.Marka = Marka;
+        this.typeAuto = typeAuto;
+        this.ColorAuto = ColorAuto;
+        this.PowerEngine = PowerEngine;
+        this.CntWheels = CntWheels;
+    }
+    public Car(String RegZnak, String Marka, TypesAuto typeAuto, String ColorAuto, int pwrEngine, String serialNumber, int valueEngine, int eatingFuel, String typeOfFuel, int cntCilinders, Integer CntWheels){
+        this.regZnak = RegZnak;
+        this.Marka = Marka;
+        this.typeAuto = typeAuto;
+        this.ColorAuto = ColorAuto;
+        this.CntWheels = CntWheels;
+        this.engine = new Engine (pwrEngine, serialNumber, valueEngine, eatingFuel, typeOfFuel, cntCilinders);
+
+    }
+    public Car(String Marka, TypesAuto typeAuto, String ColorAuto, int pwrEngine, String serialNumber, int valueEngine, int eatingFuel, String typeOfFuel, int cntCilinders, Integer CntWheels){
         this.regZnak = "Undefined";
         this.Marka = Marka;
         this.TypeAuto = typeAuto;
         this.ColorAuto = ColorAuto;
-        this.Engine = Engine;
         this.CntWheels = CntWheels;
-    }
-    public Car(String RegZnak, String Marka, TypesAuto typeAuto, String ColorAuto, class Engine, Integer CntWheels){
-        this.regZnak = RegZnak;
-        this.Marka = Marka;
-        this.TypeAuto = typeAuto;
-        this.ColorAuto = ColorAuto;
-        this.Engine = Engine;
-        this.CntWheels = CntWheels;
+        this.engine = new Engine (pwrEngine, serialNumber, valueEngine, eatingFuel, typeOfFuel, cntCilinders);
+
     }
 
     public void setRegZnak(String regZnak){
-        System.out.println("вызов сеттера 2");
         this.regZnak = regZnak;
-        System.out.println("вызов сеттера 1");
     }
     public void setColorAuto(String ColorAuto){
         this.ColorAuto = ColorAuto;
@@ -47,19 +90,15 @@ class Car {
         this.PowerEngine = PowerEngine;
     }
 
-    public void getAllInfo(){
-        System.out.println("регзнак - "+this.regZnak);
-        System.out.println("Марка - "+this.Marka);
-        System.out.println("тип авто - "+this.TypeAuto);
-        System.out.println("цвет - "+this.ColorAuto);
-        System.out.println("мощность - "+this.PowerEngine);
-        System.out.println("количество колёс - "+this.CntWheels);
+    public void getAllInfo(int type) {
+        if (type == 1) {
+            System.out.println("регзнак - " + this.regZnak);
+            System.out.println("Марка - " + this.Marka);
+            System.out.println("тип авто - " + this.TypeAuto);
+            System.out.println("цвет - " + this.ColorAuto);
+            System.out.println("количество колёс - " + this.CntWheels);
+        }
     }
-
-}
-
-
-class Complex {
 
 }
 
@@ -103,7 +142,7 @@ public class Main {
 
 
 
-        Car auto1 = new Car("А 141 ВЕ 61 RUS", "KaMaZ", Car.TypesAuto.Airplane, "Yellow", 340, 6);
+        Car auto1 = new Car("KaMaZ", Car.TypesAuto.Airplane, "Yellow", 340, 6);
         System.out.print("\nСоздано авто!\n");
 
 
@@ -127,15 +166,10 @@ public class Main {
                     break;
                 }
                 case 1: {
-                    Scanner input = new Scanner(System.in);
-
                     System.out.println("\nВведите регистрационный номер авто формата \"X 000 XX 00 RUS или X 000 XX 000 RUS\"\n");
-
-
-                    String newRegZn = input.nextLine();
-                    if (newRegZn.matches(regex)){
-                        System.out.println("Ввод правильный");
-                        auto1.setRegZnak(newRegZn);
+                    String regZn = in.next();
+                    if (regZn.matches(regex)){
+                        auto1.setRegZnak(regZn);
                     }
                     else{
                         System.out.println("Вы ввели неверный Знак!");
@@ -169,8 +203,57 @@ public class Main {
     static void task3(){
     }
 
-    static void task4(){
+    static void task4() {
+
+        Scanner in = new Scanner(System.in);
+        boolean jobTask1 = true;
+        String regex = "^[АВЕКМНОРСТУХ][\\s][0-9]{3}[\\s][АВЕКМНОРСТУХ]{2}[\\s]([0-9]{2}[\\s]RUS|[0-9]{2}[\\s]RUS)$";
+
+
+        private Engine (int pwrEngine, String serialNumber, int valueEngine, int eatingFuel, String typeOfFuel, int cntCilinders)
+        Car auto1 = new Car("KaMaZ", Car.TypesAuto.Airplane, "Yellow", 340, 6);
+        System.out.print("\nСоздано авто!\n");
+
+
+        while (jobTask1) {
+            System.out.println("\n" +
+                    "\n0 - выход" +
+                    "\n1 - добавить регистрационный знак" +
+                    "\n2 - поменять цвет машины" +
+                    "\n3 - посменять мощность двигателя" +
+                    "\n4 - " +
+                    "\n5 -  " +
+                    "\n6 -  " +
+                    "\n7 -  " +
+                    "\nn - Вывести информацию об авто" +
+                    "\n");
+
+
+            System.out.println("\n\nВведите номер задания:");
+            Integer zadan1 = in.nextInt();
+            switch (zadan1) {
+                case 0: {
+                    System.out.println("\nВыход из меню\n");
+                    jobTask1 = false;
+                    break;
+                }
+                case 1: {
+                    System.out.println("\nВведите регистрационный номер авто формата \"X 000 XX 00 RUS или X 000 XX 000 RUS\"\n");
+                    String regZn = in.next();
+                    if (regZn.matches(regex)) {
+                        auto1.setRegZnak(regZn);
+                    } else {
+                        System.out.println("Вы ввели неверный Знак!");
+                        break;
+                    }
+                    break;
+
+
+                }
+            }
+        }
     }
+
 
     static void task5(){
     }
